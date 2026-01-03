@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add New Post</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:20px;}
+.box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:5px;}
+button{background:#1877f2;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
+pre{background:#f0f0f0;padding:10px;border-radius:5px;overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Add New Post</h2>
+
+<label>Post Title:</label>
+<input id="post-title" placeholder="Enter post title">
+
+<label>Post Description:</label>
+<textarea id="post-desc" rows="5" placeholder="Enter post description"></textarea>
+
+<button onclick="generatePost()">Generate JSON</button>
+
+<p><b>Step 1:</b> Copy the JSON below and paste it in <b>posts.json</b></p>
+<pre id="json-output">[]</pre>
+
+<p><b>Step 2:</b> <a href="posts.json" target="_blank">Open posts.json</a> to paste</p>
+</div>
+
+<script>
+function generatePost(){
+    const title = document.getElementById('post-title').value.trim();
+    const desc = document.getElementById('post-desc').value.trim();
+    if(title === "" || desc === ""){
+        alert("Please enter both title and description!");
+        return;
+    }
+    const post = {
+        title: title,
+        description: desc
+    };
+    const output = [post]; // simple array, can add more manually
+    document.getElementById('json-output').innerText = JSON.stringify(output, null, 2);
+}
+</script>
+
+</body>
+</html>
