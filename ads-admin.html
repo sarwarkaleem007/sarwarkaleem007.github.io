@@ -1,55 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add New Advertisement</title>
+<title>Ads Admin Panel</title>
 <style>
 body{font-family:Arial;background:#f4f4f4;padding:20px;}
 .box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
 input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:5px;}
-button{background:#25d366;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
-pre{background:#f0f0f0;padding:10px;border-radius:5px;overflow-x:auto;}
+button{background:#1877f2;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;margin-top:10px;}
+h2{margin-top:0;text-align:center;}
+.preview{margin-top:20px;}
+.preview .card{background:#fff;padding:10px;margin:10px 0;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
 </style>
 </head>
 <body>
 
 <div class="box">
 <h2>Add New Advertisement</h2>
+<input id="ad-title" placeholder="Ad Title">
+<textarea id="ad-desc" rows="3" placeholder="Ad Description"></textarea>
+<input id="ad-number" placeholder="Mobile Number (e.g. 923001234567)">
+<input type="file" id="ad-image-file">
+<input type="file" id="ad-video-file">
+<button onclick="addAd()">Generate Advertisement</button>
+<button onclick="downloadJSON(ads,'ads.json')">Download ads.json</button>
 
-<label>Advertisement Title:</label>
-<input id="ad-title" placeholder="Enter ad title">
-
-<label>Advertisement Description:</label>
-<textarea id="ad-desc" rows="5" placeholder="Enter ad description"></textarea>
-
-<label>WhatsApp / Link:</label>
-<input id="ad-link" placeholder="Enter WhatsApp or website link">
-
-<button onclick="generateAd()">Generate JSON</button>
-
-<p><b>Step 1:</b> Copy the JSON below and paste it in <b>ads.json</b></p>
-<pre id="json-output">[]</pre>
-
-<p><b>Step 2:</b> <a href="ads.json" target="_blank">Open ads.json</a> to paste</p>
+<h2 class="section-title">Preview</h2>
+<div class="preview" id="preview"></div>
 </div>
 
 <script>
-function generateAd(){
-    const title = document.getElementById('ad-title').value.trim();
-    const desc = document.getElementById('ad-desc').value.trim();
-    const link = document.getElementById('ad-link').value.trim();
-    if(title === "" || desc === "" || link === ""){
-        alert("Please enter title, description, and link!");
-        return;
-    }
-    const ad = {
-        title: title,
-        description: desc,
-        link: link
-    };
-    const output = [ad]; // simple array, can add more manually
-    document.getElementById('json-output').innerText = JSON.stringify(output, null, 2);
-}
-</script>
+let ads = JSON.parse(localStorage.getItem('ads')) || [];
 
+function fileToURL(fileInput){
+  const file = fileInput.files[0];
+  if(file) return URL.createObjectURL(file);
+  return '';
+}
+
+function renderPreview(){
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  ads.forEach(a=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`<h3>${a.title}</h3>
+    <p>${a.description}</p>
+    <p>Mobile: ${a.number}</p>
+    ${a.image?`<img src="${a.image}" style="max-width:100%;margin-top:10px;border-radius:6px;">`:''}
+    ${a.video?`<video controls src="${a.video}" style="max-width:100%;margin-top:10px;"></video>`:''}
+    <a href="https://wa.me/${a.number}" target="_blank">Contact via WhatsApp</a>`;
+    preview.appendChild(card);
+  });
+}
+
+function addAd(){
+  const t=document.getElementById('ad-title').value;
+  const d=document.getElementById('ad-desc').value;
+  const n=document.getElementById('ad-number').value;
+  const i=fileToURL(document.getElementById('ad-image-file'));
+  const v=fileToURL(document.getElementById('ad-video-file'));
+  if(t && d && n){
+    ads.push({title:t,description:d,number:n,image:i,video:v});
+    localStorage.setItem('ads',JSON.stringify(ads));
+    alert('Advertisement added successfully! WhatsApp link ready.');
+    window.open('https://wa.me/'+n,'_blank');
+    document.getElementById('ad-title').value='';
+    document.getElementById('ad-desc').value='';
+    document.getElementById('ad-number').value='';
+    document.getElementById('ad-image-file').value='';
+    document.getElementById('ad-video-file').value='';
+    renderPreview();
+  } else {
+    alert('Please fill Title, Description, and Mobile Number!');
+  }
+}
+
+function downloadJSON(data, filename){
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+renderPreview();
+</script>
 </body>
 </html>
