@@ -14,8 +14,8 @@ Through my social media presence and this website, brands can connect with a **h
 
 ## 📧 Contact Me
 
-- **Email:** kaleemofficial@gmail.com  
-- **WhatsApp:** [+92-300-1234567](https://wa.me/923001234567)
+- **Email:** sarwarkaleem890@gmail.com  
+- **WhatsApp:** [+92-3343568248](https://wa.me/923001234567)
 
 ---
 
