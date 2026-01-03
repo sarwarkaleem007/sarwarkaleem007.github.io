@@ -3,103 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhammad Kaleem - Dynamic Media Hub</title>
+<title>Muhammad Kaleem | Media & Ads Hub</title>
+
 <style>
-body {font-family: Arial,sans-serif;margin:0;padding:0;background:#f4f4f4;color:#333;transition:0.3s;}
-body.dark {background:#121212;color:#f4f4f4;}
-header{background:#1c1c1c;color:white;text-align:center;padding:25px;}
-header h1{font-size:28px;margin:0;}
-header p{font-size:16px;margin:5px 0;}
-.hero{text-align:center;padding:40px 20px;background:#e0f7fa;}
-.hero p{max-width:700px;margin:0 auto 20px;font-size:18px;line-height:1.5;}
-.buttons a{display:inline-block;margin:10px;padding:12px 25px;border-radius:5px;color:white;font-weight:bold;}
-.buttons .whatsapp{background:#25d366;}
-.buttons .email{background:#1c1c1c;}
-.social-icons{text-align:center;margin:20px 0;}
-.social-icons a{margin:0 12px;padding:8px 12px;border:1px solid #1c1c1c;border-radius:5px;transition:0.3s;color:#1c1c1c;font-weight:bold;}
-.social-icons a:hover{background:#1c1c1c;color:white;}
-.section-title{text-align:center;font-size:24px;margin:30px 0 15px;}
-.card-container{display:flex;flex-wrap:wrap;justify-content:center;margin:0 10px;}
-.card{background:white;border-radius:10px;padding:15px;margin:10px;width:300px;box-shadow:0 5px 15px rgba(0,0,0,0.1);transition:0.3s;}
-.card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.2);}
-.card img, .card iframe{width:100%;border-radius:5px;margin-top:10px;}
-.card h3{margin:0 0 10px;}
-.card p{font-size:14px;line-height:1.4;}
-.card a{display:inline-block;margin-top:10px;padding:8px 15px;background:#ff9900;color:white;border-radius:5px;transition:0.3s;}
-.card a:hover{opacity:0.85;}
-footer{text-align:center;padding:20px;background:#1c1c1c;color:white;margin-top:30px;}
-.dark-toggle{position:fixed;top:15px;right:15px;background:#1c1c1c;color:white;padding:8px 12px;border:none;border-radius:5px;cursor:pointer;z-index:999;}
-.dark-toggle:hover{opacity:0.85;}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f4f4;
+  color:#222;
+}
+header{
+  background:#111;
+  color:#fff;
+  padding:25px;
+  text-align:center;
+}
+.hero{
+  background:#e9f5ff;
+  padding:30px 15px;
+  text-align:center;
+}
+.hero p{margin:8px 0;}
+
+.social-buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+.social-buttons a{
+  padding:12px 22px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:bold;
+}
+.facebook{background:#1877f2;}
+.tiktok{background:#000;}
+.whatsapp{background:#25d366;}
+
+.section-title{
+  text-align:center;
+  font-size:24px;
+  margin:30px 0 15px;
+}
+
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.card{
+  background:#fff;
+  width:300px;
+  margin:10px;
+  padding:15px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card h3{margin-top:0;}
+
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  color:#1877f2;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+footer{
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:15px;
+  margin-top:30px;
+}
 </style>
 </head>
+
 <body>
 
-<button class="dark-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
-
 <header>
-<h1>Muhammad Kaleem</h1>
-<p>Content Creator | Digital Promoter | Advertise With Me</p>
+  <h1>Muhammad Kaleem</h1>
+  <p>Content Creator | Digital Promoter</p>
 </header>
 
 <section class="hero">
-<p>Welcome to my dynamic media & advertising hub! Add posts, images, or videos easily. Advertise your brand professionally.</p>
-<div class="buttons">
-<a href="https://wa.me/923001234567" target="_blank" class="whatsapp">Advertise With Me</a>
-<a href="mailto:kaleemofficial@gmail.com" class="email">Email Me</a>
-</div>
-</section>
+  <p>
+    I run my own media platform where brands can advertise and
+    I share posts, images, and short clips with my audience.
+  </p>
 
-<section class="social-icons">
-<a href="https://www.youtube.com/@YourChannelName" target="_blank">YouTube</a>
-<a href="https://www.tiktok.com/@YourUsername" target="_blank">TikTok</a>
-<a href="https://www.instagram.com/YourUsername" target="_blank">Instagram</a>
-<a href="https://www.facebook.com/YourPageName" target="_blank">Facebook</a>
+  <p>📞 Phone: +92 300 1234567</p>
+  <p>📧 Email: kaleemofficial@gmail.com</p>
+
+  <div class="social-buttons">
+    <a class="facebook" href="https://facebook.com/yourpage" target="_blank">Facebook</a>
+    <a class="tiktok" href="https://tiktok.com/@yourid" target="_blank">TikTok</a>
+    <a class="whatsapp" href="https://wa.me/923001234567" target="_blank">Advertise With Me</a>
+  </div>
 </section>
 
 <h2 class="section-title">My Posts</h2>
-<div class="card-container" id="postsContainer"></div>
+<div id="posts" class="container"></div>
 
 <h2 class="section-title">Advertisements</h2>
-<div class="card-container" id="adsContainer"></div>
+<div id="ads" class="container"></div>
 
 <footer>
-<p>&copy; 2026 Muhammad Kaleem | All Rights Reserved</p>
+  © 2026 Muhammad Kaleem — All Rights Reserved
 </footer>
 
 <script>
-function toggleDarkMode(){document.body.classList.toggle('dark');}
-
-// Load Posts dynamically
-async function loadPosts(){
-  const res = await fetch('posts.json');
-  const posts = await res.json();
-  const container = document.getElementById('postsContainer');
-  posts.forEach(p=>{
-    const card = document.createElement('div');
-    card.className='card';
-    card.innerHTML=`<h3>${p.title}</h3><p>${p.description}</p>` + 
-      (p.type==='video'?`<iframe src="https://www.youtube.com/embed/${p.link}" frameborder="0" allowfullscreen></iframe>`:`<img src="${p.link}" alt="${p.title}">`);
-    container.appendChild(card);
+// LOAD POSTS
+fetch('posts.json')
+.then(res => res.json())
+.then(data => {
+  const box = document.getElementById('posts');
+  box.innerHTML = '';
+  data.forEach(item => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+      </div>
+    `;
   });
-}
+})
+.catch(() => {
+  document.getElementById('posts').innerHTML =
+  '<p style="text-align:center">Posts not loading</p>';
+});
 
-// Load Ads dynamically
-async function loadAds(){
-  const res = await fetch('ads.json');
-  const ads = await res.json();
-  const container = document.getElementById('adsContainer');
-  ads.forEach(a=>{
-    const card = document.createElement('div');
-    card.className='card';
-    card.innerHTML=`<h3>${a.title}</h3><img src="${a.img}" alt="${a.title}"><p>${a.description}</p><a href="${a.link}" target="_blank">Advertise Now</a>`;
-    container.appendChild(card);
+// LOAD ADS
+fetch('ads.json')
+.then(res => res.json())
+.then(data => {
+  const box = document.getElementById('ads');
+  box.innerHTML = '';
+  data.forEach(ad => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>${ad.title}</h3>
+        <p>${ad.description}</p>
+        <a href="${ad.link}" target="_blank">Contact Now</a>
+      </div>
+    `;
   });
-}
-
-loadPosts();
-loadAds();
+})
+.catch(() => {
+  document.getElementById('ads').innerHTML =
+  '<p style="text-align:center">Ads not loading</p>';
+});
 </script>
 
 </body>
 </html>
-
