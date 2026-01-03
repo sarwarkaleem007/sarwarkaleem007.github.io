@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add New Advertisement</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:20px;}
+.box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:5px;}
+button{background:#25d366;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
+pre{background:#f0f0f0;padding:10px;border-radius:5px;overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Add New Advertisement</h2>
+
+<label>Advertisement Title:</label>
+<input id="ad-title" placeholder="Enter ad title">
+
+<label>Advertisement Description:</label>
+<textarea id="ad-desc" rows="5" placeholder="Enter ad description"></textarea>
+
+<label>WhatsApp / Link:</label>
+<input id="ad-link" placeholder="Enter WhatsApp or website link">
+
+<button onclick="generateAd()">Generate JSON</button>
+
+<p><b>Step 1:</b> Copy the JSON below and paste it in <b>ads.json</b></p>
+<pre id="json-output">[]</pre>
+
+<p><b>Step 2:</b> <a href="ads.json" target="_blank">Open ads.json</a> to paste</p>
+</div>
+
+<script>
+function generateAd(){
+    const title = document.getElementById('ad-title').value.trim();
+    const desc = document.getElementById('ad-desc').value.trim();
+    const link = document.getElementById('ad-link').value.trim();
+    if(title === "" || desc === "" || link === ""){
+        alert("Please enter title, description, and link!");
+        return;
+    }
+    const ad = {
+        title: title,
+        description: desc,
+        link: link
+    };
+    const output = [ad]; // simple array, can add more manually
+    document.getElementById('json-output').innerText = JSON.stringify(output, null, 2);
+}
+</script>
+
+</body>
+</html>
