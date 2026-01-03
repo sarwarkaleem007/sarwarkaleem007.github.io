@@ -1,50 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add New Post</title>
+<title>Post Admin Panel</title>
 <style>
 body{font-family:Arial;background:#f4f4f4;padding:20px;}
 .box{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
 input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:5px;}
-button{background:#1877f2;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
-pre{background:#f0f0f0;padding:10px;border-radius:5px;overflow-x:auto;}
+button{background:#1877f2;color:#fff;padding:10px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;margin-top:10px;}
+h2{margin-top:0;text-align:center;}
+.preview{margin-top:20px;}
+.preview .card{background:#fff;padding:10px;margin:10px 0;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
 </style>
 </head>
 <body>
 
 <div class="box">
 <h2>Add New Post</h2>
+<input id="post-title" placeholder="Post Title">
+<textarea id="post-desc" rows="3" placeholder="Post Description"></textarea>
+<input id="post-number" placeholder="Mobile Number (e.g. 923001234567)">
+<input type="file" id="post-image-file">
+<input type="file" id="post-video-file">
+<button onclick="addPost()">Generate Post</button>
+<button onclick="downloadJSON(posts,'posts.json')">Download posts.json</button>
 
-<label>Post Title:</label>
-<input id="post-title" placeholder="Enter post title">
-
-<label>Post Description:</label>
-<textarea id="post-desc" rows="5" placeholder="Enter post description"></textarea>
-
-<button onclick="generatePost()">Generate JSON</button>
-
-<p><b>Step 1:</b> Copy the JSON below and paste it in <b>posts.json</b></p>
-<pre id="json-output">[]</pre>
-
-<p><b>Step 2:</b> <a href="posts.json" target="_blank">Open posts.json</a> to paste</p>
+<h2 class="section-title">Preview</h2>
+<div class="preview" id="preview"></div>
 </div>
 
 <script>
-function generatePost(){
-    const title = document.getElementById('post-title').value.trim();
-    const desc = document.getElementById('post-desc').value.trim();
-    if(title === "" || desc === ""){
-        alert("Please enter both title and description!");
-        return;
-    }
-    const post = {
-        title: title,
-        description: desc
-    };
-    const output = [post]; // simple array, can add more manually
-    document.getElementById('json-output').innerText = JSON.stringify(output, null, 2);
-}
-</script>
+let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
+// Convert file to URL
+function fileToURL(fileInput){
+  const file = fileInput.files[0];
+  if(file) return URL.createObjectURL(file);
+  return '';
+}
+
+function renderPreview(){
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  posts.forEach(p=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`<h3>${p.title}</h3>
+    <p>${p.description}</p>
+    <p>Mobile: ${p.number}</p>
+    ${p.image?`<img src="${p.image}" style="max-width:100%;margin-top:10px;border-radius:6px;">`:''}
+    ${p.video?`<video controls src="${p.video}" style="max-width:100%;margin-top:10px;"></video>`:''}`;
+    preview.appendChild(card);
+  });
+}
+
+function addPost(){
+  const t=document.getElementById('post-title').value;
+  const d=document.getElementById('post-desc').value;
+  const n=document.getElementById('post-number').value;
+  const i=fileToURL(document.getElementById('post-image-file'));
+  const v=fileToURL(document.getElementById('post-video-file'));
+  if(t && d && n){
+    posts.push({title:t,description:d,number:n,image:i,video:v});
+    localStorage.setItem('posts',JSON.stringify(posts));
+    alert('Post added successfully!');
+    document.getElementById('post-title').value='';
+    document.getElementById('post-desc').value='';
+    document.getElementById('post-number').value='';
+    document.getElementById('post-image-file').value='';
+    document.getElementById('post-video-file').value='';
+    renderPreview();
+  } else {
+    alert('Please fill Title, Description, and Mobile Number!');
+  }
+}
+
+function downloadJSON(data, filename){
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+renderPreview();
+</script>
 </body>
 </html>
